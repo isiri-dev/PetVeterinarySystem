@@ -9,20 +9,21 @@ public class Veterinarian {
     private String name;
     private String specialization;
     private String phone;
-    private String email;
+   
 
     public Veterinarian() {
     }
 
     public Veterinarian(int vetId, String name,
-                        String specialization, String phone,
-                        String email) {
+                        String specialization, String phone
+                        )
+    {
 
         this.vetId = vetId;
         this.name = name;
         this.specialization = specialization;
         this.phone = phone;
-        this.email = email;
+       
     }
 
     public int getVetId() {
@@ -57,11 +58,4 @@ public class Veterinarian {
         this.phone = phone;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
