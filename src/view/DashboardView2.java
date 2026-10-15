@@ -4,7 +4,7 @@
  */
 package view;
 
-import java.awt.Color;
+
 
 
 /**
@@ -20,11 +20,7 @@ public class DashboardView2 extends javax.swing.JFrame {
      */
    public DashboardView2() {
     initComponents();
-            
-    pnlCustomersCard = new view.GradientPanel();
-    pnlPetscard = new view.GradientPanel();
-    pnlVetCard = new view.GradientPanel();
-    pnlAppointment = new view.GradientPanel();
+           
   
 }
 
@@ -445,6 +441,7 @@ public class DashboardView2 extends javax.swing.JFrame {
         lblUpcomingTitle.setText("Upcoming Appointments");
 
         tblUpcomingAppointments.setBackground(new java.awt.Color(255, 255, 255));
+        tblUpcomingAppointments.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         tblUpcomingAppointments.setForeground(new java.awt.Color(24, 35, 56));
         tblUpcomingAppointments.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -458,7 +455,9 @@ public class DashboardView2 extends javax.swing.JFrame {
             }
         ));
         tblUpcomingAppointments.setGridColor(new java.awt.Color(229, 231, 235));
+        tblUpcomingAppointments.setIntercellSpacing(new java.awt.Dimension(1, 1));
         tblUpcomingAppointments.setPreferredSize(new java.awt.Dimension(780, 220));
+        tblUpcomingAppointments.setRowHeight(30);
         tblUpcomingAppointments.setSelectionBackground(new java.awt.Color(227, 242, 253));
         tblUpcomingAppointments.setSelectionForeground(new java.awt.Color(24, 35, 56));
         jScrollPane1.setViewportView(tblUpcomingAppointments);
