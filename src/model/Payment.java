@@ -18,17 +18,18 @@ public class Payment {
     public Payment(){
     }
     
-    public Payment(int paymentId, int appintmentId, 
-            double amount, Timestamp paymentDate,
-            String paymentMethod, String paymentStatus) {
-        
-        this.paymentId = paymentId;
-        this.appointmentId = appointmentId;
-        this.amount = amount;
-        this.paymentDate = paymentDate;
-        this.paymentMethod = paymentMethod;
-        this.paymentStatus = paymentStatus;
+    public Payment(int paymentId, int appointmentId,
+        double amount, Timestamp paymentDate,
+        String paymentMethod, String paymentStatus) {
+
+            this.paymentId = paymentId;
+            this.appointmentId = appointmentId;
+            this.amount = amount;
+            this.paymentDate = paymentDate;
+            this.paymentMethod = paymentMethod;
+            this.paymentStatus = paymentStatus;
     }
+    
     
     public int getPaymentId(){
         return paymentId;
@@ -42,8 +43,8 @@ public class Payment {
         return appointmentId;
     }
     
-    public void setAppointmentId(int appoinmentId){
-        this.appointmentId = appointmentId;
+    public void setAppointmentId(int appointmentId) {
+    this.appointmentId = appointmentId;
     }
     
     public double getAmount(){
@@ -62,13 +63,13 @@ public class Payment {
         this.paymentDate = paymentDate;
     }
     
-    public String getPaymentMethod(){
+    public String getPaymentMethod() {
         return paymentMethod;
     }
-    
-    public void setPaymentMethod(String payementMethod){
+
+    public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
-    }
+    }   
     
     public String getPaymentStatus(){
         return paymentStatus;
