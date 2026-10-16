@@ -44,7 +44,7 @@ public class Payment {
     }
     
     public void setAppointmentId(int appointmentId) {
-    this.appointmentId = appointmentId;
+         this.appointmentId = appointmentId;
     }
     
     public double getAmount(){

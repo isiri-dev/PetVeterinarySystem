@@ -28,13 +28,6 @@ public class PaymentDAOTest {
 
         PaymentDAO dao = new PaymentDAO();
 
-        try (java.sql.Connection con = database.DBConnection.getConnection();
-     java.sql.Statement st = con.createStatement();
-     java.sql.ResultSet rs = st.executeQuery("SELECT * FROM appointments")) {
-    while (rs.next()) {
-        System.out.println("Java sees appointment: " + rs.getInt("appointment_id"));
-    }
-}
         
         try {
             boolean result = dao.addPayment(payment);
