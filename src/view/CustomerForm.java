@@ -4,12 +4,17 @@
  */
 package view;
 
-/**
- *
- * @author LENOVO
- */
+import model.Customer;
+import model.CustomerDAO;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class CustomerForm extends javax.swing.JFrame {
     
+    private CustomerDAO customerDAO = new CustomerDAO();
+
+    private DefaultTableModel tableModel;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CustomerForm.class.getName());
 
     /**
@@ -17,11 +22,57 @@ public class CustomerForm extends javax.swing.JFrame {
      */
     public CustomerForm() {
         initComponents();
-        
+        setupCustomerTable();
+        loadCustomers();
            setSize(1420, 800);       // about the width of your content
            setLocationRelativeTo(null); // center on screen
     }
+    
+    private void setupCustomerTable() {
 
+    tableModel = new DefaultTableModel(
+        new String[]{
+            "Customer ID",
+            "Customer Name",
+            "Phone",
+            "Email",
+            "Address"
+        }, 0
+    ) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+
+    Tablecus.setModel(tableModel);
+}
+
+    private void loadCustomers() {
+
+    try {
+        tableModel.setRowCount(0);
+
+        for (Customer customer : customerDAO.getAllCustomers()) {
+
+            tableModel.addRow(new Object[]{
+                customer.getCustomerId(),
+                customer.getName(),
+                customer.getPhone(),
+                customer.getEmail(),
+                customer.getAddress()
+            });
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Unable to load customers: " + e.getMessage(),
+            "Database Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,17 +92,17 @@ public class CustomerForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        cusnametxt = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtCustomerName = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        txtAddress = new javax.swing.JTextField();
+        txtCustomerId = new javax.swing.JTextField();
+        txtPhone = new javax.swing.JTextField();
         Addbtn = new javax.swing.JButton();
         Updatebtn = new javax.swing.JButton();
         Deletebtn = new javax.swing.JButton();
         Clearbtn = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         Searchbtn = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -88,6 +139,11 @@ public class CustomerForm extends javax.swing.JFrame {
             }
         });
         Tablecus.setPreferredSize(new java.awt.Dimension(750, 200));
+        Tablecus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablecusMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Tablecus);
 
         CustomerDetailspnl.setBackground(new java.awt.Color(255, 255, 255));
@@ -116,37 +172,40 @@ public class CustomerForm extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(24, 35, 59));
         jLabel8.setText("Address");
 
-        cusnametxt.setBackground(new java.awt.Color(255, 255, 255));
-        cusnametxt.setText("Customer Name");
-        cusnametxt.setPreferredSize(new java.awt.Dimension(250, 30));
+        txtCustomerName.setBackground(new java.awt.Color(255, 255, 255));
+        txtCustomerName.setText("Customer Name");
+        txtCustomerName.setPreferredSize(new java.awt.Dimension(250, 30));
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Email");
+        txtEmail.setBackground(new java.awt.Color(255, 255, 255));
+        txtEmail.setText("Email");
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setText("Address");
+        txtAddress.setBackground(new java.awt.Color(255, 255, 255));
+        txtAddress.setText("Address");
 
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setText("Customer ID");
+        txtCustomerId.setBackground(new java.awt.Color(255, 255, 255));
+        txtCustomerId.setText("Customer ID");
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setText("Tel Number");
+        txtPhone.setBackground(new java.awt.Color(255, 255, 255));
+        txtPhone.setText("Tel Number");
 
         Addbtn.setBackground(new java.awt.Color(41, 98, 255));
         Addbtn.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         Addbtn.setForeground(new java.awt.Color(255, 255, 255));
         Addbtn.setText("Add");
         Addbtn.setPreferredSize(new java.awt.Dimension(130, 40));
+        Addbtn.addActionListener(this::AddbtnActionPerformed);
 
         Updatebtn.setBackground(new java.awt.Color(34, 139, 94));
         Updatebtn.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         Updatebtn.setText("Update");
         Updatebtn.setPreferredSize(new java.awt.Dimension(130, 40));
+        Updatebtn.addActionListener(this::UpdatebtnActionPerformed);
 
         Deletebtn.setBackground(new java.awt.Color(220, 53, 69));
         Deletebtn.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         Deletebtn.setText("Delete");
         Deletebtn.setPreferredSize(new java.awt.Dimension(130, 40));
+        Deletebtn.addActionListener(this::DeletebtnActionPerformed);
 
         Clearbtn.setBackground(new java.awt.Color(108, 117, 125));
         Clearbtn.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -181,12 +240,12 @@ public class CustomerForm extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CustomerDetailspnlLayout.createSequentialGroup()
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(216, 216, 216))
                     .addGroup(CustomerDetailspnlLayout.createSequentialGroup()
                         .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cusnametxt, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                            .addComponent(jTextField3))
+                            .addComponent(txtCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                            .addComponent(txtCustomerId))
                         .addGap(2, 2, 2)))
                 .addGap(13, 13, 13)
                 .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,10 +254,10 @@ public class CustomerForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CustomerDetailspnlLayout.createSequentialGroup()
-                        .addComponent(jTextField2)
+                        .addComponent(txtAddress)
                         .addGap(22, 22, 22))
                     .addGroup(CustomerDetailspnlLayout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(233, Short.MAX_VALUE))))
         );
         CustomerDetailspnlLayout.setVerticalGroup(
@@ -210,18 +269,18 @@ public class CustomerForm extends javax.swing.JFrame {
                 .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCustomerId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(cusnametxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Addbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,14 +294,15 @@ public class CustomerForm extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(24, 35, 59));
         jLabel9.setText("Search Cusotmer");
 
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField5.setText("Search by name or ID");
+        txtSearch.setBackground(new java.awt.Color(255, 255, 255));
+        txtSearch.setText("Search by name or ID");
 
         Searchbtn.setBackground(new java.awt.Color(41, 98, 255));
         Searchbtn.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         Searchbtn.setForeground(new java.awt.Color(255, 255, 255));
         Searchbtn.setText("Search");
         Searchbtn.setPreferredSize(new java.awt.Dimension(100, 35));
+        Searchbtn.addActionListener(this::SearchbtnActionPerformed);
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-search-16.png"))); // NOI18N
 
@@ -256,7 +316,7 @@ public class CustomerForm extends javax.swing.JFrame {
                         .addGap(240, 240, 240)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(111, 111, 111)
                         .addComponent(jLabel10)
                         .addGap(34, 34, 34)
@@ -281,7 +341,7 @@ public class CustomerForm extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -341,8 +401,214 @@ public class CustomerForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ClearbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearbtnActionPerformed
-        // TODO add your handling code here:
+       txtCustomerId.setText("");
+       txtCustomerName.setText("");
+       txtPhone.setText("");
+       txtEmail.setText("");
+       txtAddress.setText("");
     }//GEN-LAST:event_ClearbtnActionPerformed
+
+    private void AddbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddbtnActionPerformed
+        try {
+         String name = txtCustomerName.getText().trim();
+         String phone = txtPhone.getText().trim();
+         String email = txtEmail.getText().trim();
+         String address = txtAddress.getText().trim();
+
+                  if (name.isEmpty() || phone.isEmpty()
+                              || email.isEmpty() || address.isEmpty()) {
+
+                         JOptionPane.showMessageDialog(
+                          this,"Please fill in all customer details."
+                            );
+                return;
+                   }
+
+        Customer customer = new Customer();
+        customer.setName(name);
+        customer.setPhone(phone);
+        customer.setEmail(email);
+        customer.setAddress(address);
+
+             boolean success = customerDAO.addCustomer(customer);
+
+                  if (success) {
+                          JOptionPane.showMessageDialog(
+                         this,"Customer added successfully!"
+                             );
+
+                loadCustomers();
+                    }
+
+            }          
+         catch (SQLException e) {
+             JOptionPane.showMessageDialog(
+             this,
+             "Error adding customer: " + e.getMessage(),
+             "Database Error",
+                JOptionPane.ERROR_MESSAGE
+                );
+            }
+    }//GEN-LAST:event_AddbtnActionPerformed
+
+    private void UpdatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdatebtnActionPerformed
+                     
+           try {
+        int customerId = Integer.parseInt(txtCustomerId.getText().trim());
+
+        String name = txtCustomerName.getText().trim();
+        String phone = txtPhone.getText().trim();
+        String email = txtEmail.getText().trim();
+        String address = txtAddress.getText().trim();
+
+        if (name.isEmpty() || phone.isEmpty()
+                || email.isEmpty() || address.isEmpty()) {
+
+            JOptionPane.showMessageDialog(this,
+                    "Please fill in all customer details.");
+            return;
+        }
+
+        Customer customer = new Customer();
+
+        customer.setCustomerId(customerId);
+        customer.setName(name);
+        customer.setPhone(phone);
+        customer.setEmail(email);
+        customer.setAddress(address);
+
+        boolean success = customerDAO.updateCustomer(customer);
+
+        if (success) {
+            JOptionPane.showMessageDialog(this,
+                    "Customer updated successfully!");
+
+            loadCustomers();
+
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Customer was not updated. Please check the customer ID.");
+        }
+
+    } catch (NumberFormatException e) {
+
+        JOptionPane.showMessageDialog(this,
+                "Please select a customer from the table.");
+
+    } catch (SQLException e) {
+
+        JOptionPane.showMessageDialog(this,
+                "Error updating customer: " + e.getMessage(),
+                "Database Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+        
+ 
+            
+    }//GEN-LAST:event_UpdatebtnActionPerformed
+
+    private void TablecusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablecusMouseClicked
+        
+        int selectedRow = Tablecus.getSelectedRow();
+
+            if (selectedRow != -1) {
+                    txtCustomerId.setText(Tablecus.getValueAt(selectedRow, 0).toString());
+                    txtCustomerName.setText(Tablecus.getValueAt(selectedRow, 1).toString());
+                    txtPhone.setText(Tablecus.getValueAt(selectedRow, 2).toString());
+                    txtEmail.setText(Tablecus.getValueAt(selectedRow, 3).toString());
+                    txtAddress.setText(Tablecus.getValueAt(selectedRow, 4).toString());
+                    }
+    }//GEN-LAST:event_TablecusMouseClicked
+
+    private void DeletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletebtnActionPerformed
+        
+        try {
+            
+            int customerId = Integer.parseInt(txtCustomerId.getText().trim());
+
+            int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to delete this customer?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION
+    );
+
+             if (confirm == JOptionPane.YES_OPTION) {
+                
+                 boolean success = customerDAO.deleteCustomer(customerId);
+
+                 if (success) {
+                    
+                     JOptionPane.showMessageDialog(this,
+                    "Customer deleted successfully!");
+
+            loadCustomers();
+
+            txtCustomerId.setText("");
+            txtCustomerName.setText("");
+            txtPhone.setText("");
+            txtEmail.setText("");
+            txtAddress.setText("");
+
+        } 
+        
+        else {
+            JOptionPane.showMessageDialog(this,
+                    "Customer not found.");
+        }
+    }
+
+} 
+        catch (NumberFormatException e) {
+    JOptionPane.showMessageDialog(this,
+            "Please select a customer from the table.");
+
+        } 
+        catch (SQLException e) {
+    JOptionPane.showMessageDialog(this,
+            "Error deleting customer: " + e.getMessage(),
+            "Database Error",
+            JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_DeletebtnActionPerformed
+
+    private void SearchbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchbtnActionPerformed
+        
+        String searchText = txtSearch.getText().trim().toLowerCase();
+
+        tableModel.setRowCount(0);
+
+    try {
+         for (Customer customer : customerDAO.getAllCustomers()) {
+
+        if (customer.getName().toLowerCase().contains(searchText)
+                || customer.getPhone().toLowerCase().contains(searchText)
+                || (customer.getEmail() != null
+                && customer.getEmail().toLowerCase().contains(searchText))) {
+
+            tableModel.addRow(new Object[]{
+                customer.getCustomerId(),
+                customer.getName(),
+                customer.getPhone(),
+                customer.getEmail(),
+                customer.getAddress()
+            });
+        }
+    }
+
+         if (tableModel.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this,
+                "No matching customers found.");
+             }
+
+      } 
+    catch (SQLException e) {
+        JOptionPane.showMessageDialog(this,
+            "Error searching customers: " + e.getMessage(),
+            "Database Error",
+            JOptionPane.ERROR_MESSAGE);
+            }
+    }//GEN-LAST:event_SearchbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -377,7 +643,6 @@ public class CustomerForm extends javax.swing.JFrame {
     private javax.swing.JButton Searchbtn;
     private javax.swing.JTable Tablecus;
     private javax.swing.JButton Updatebtn;
-    private javax.swing.JTextField cusnametxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -390,11 +655,12 @@ public class CustomerForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JPanel pnlMain;
+    private javax.swing.JTextField txtAddress;
+    private javax.swing.JTextField txtCustomerId;
+    private javax.swing.JTextField txtCustomerName;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtPhone;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

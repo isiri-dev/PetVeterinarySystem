@@ -67,7 +67,7 @@
                           <EmptySpace min="-2" pref="240" max="-2" attributes="0"/>
                           <Component id="jLabel9" min="-2" pref="118" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTextField5" min="-2" pref="193" max="-2" attributes="0"/>
+                          <Component id="txtSearch" min="-2" pref="193" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
@@ -98,7 +98,7 @@
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtSearch" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -164,6 +164,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TablecusMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -204,13 +207,13 @@
                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jTextField4" min="-2" pref="241" max="-2" attributes="0"/>
+                              <Component id="txtPhone" min="-2" pref="241" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="216" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="cusnametxt" pref="241" max="32767" attributes="0"/>
-                                  <Component id="jTextField3" max="32767" attributes="0"/>
+                                  <Component id="txtCustomerName" pref="241" max="32767" attributes="0"/>
+                                  <Component id="txtCustomerId" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           </Group>
@@ -223,11 +226,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jTextField2" max="32767" attributes="0"/>
+                              <Component id="txtAddress" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="jTextField1" min="-2" pref="185" max="-2" attributes="0"/>
+                              <Component id="txtEmail" min="-2" pref="185" max="-2" attributes="0"/>
                               <EmptySpace pref="233" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -243,20 +246,20 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField3" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                          <Component id="txtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCustomerId" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cusnametxt" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCustomerName" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField2" alignment="3" min="-2" pref="74" max="-2" attributes="0"/>
+                          <Component id="txtAddress" alignment="3" min="-2" pref="74" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField4" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                          <Component id="txtPhone" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="56" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -337,7 +340,7 @@
                 <Property name="text" type="java.lang.String" value="Address"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="cusnametxt">
+            <Component class="javax.swing.JTextField" name="txtCustomerName">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -348,7 +351,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="txtEmail">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -356,7 +359,7 @@
                 <Property name="text" type="java.lang.String" value="Email"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField2">
+            <Component class="javax.swing.JTextField" name="txtAddress">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -364,7 +367,7 @@
                 <Property name="text" type="java.lang.String" value="Address"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField3">
+            <Component class="javax.swing.JTextField" name="txtCustomerId">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -372,7 +375,7 @@
                 <Property name="text" type="java.lang.String" value="Customer ID"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField4">
+            <Component class="javax.swing.JTextField" name="txtPhone">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -396,6 +399,9 @@
                   <Dimension value="[130, 40]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddbtnActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="Updatebtn">
               <Properties>
@@ -410,6 +416,9 @@
                   <Dimension value="[130, 40]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UpdatebtnActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="Deletebtn">
               <Properties>
@@ -424,6 +433,9 @@
                   <Dimension value="[130, 40]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeletebtnActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="Clearbtn">
               <Properties>
@@ -458,7 +470,7 @@
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Search Customer"/>
           </AccessibilityProperties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField5">
+        <Component class="javax.swing.JTextField" name="txtSearch">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -482,6 +494,9 @@
               <Dimension value="[100, 35]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SearchbtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
           <Properties>
