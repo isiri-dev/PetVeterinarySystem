@@ -4,7 +4,8 @@
  */
 package view;
 
-
+import controller.DashboardDAO;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -20,9 +21,50 @@ public class DashboardView2 extends javax.swing.JFrame {
      */
    public DashboardView2() {
     initComponents();
-           
-  
+    setLocationRelativeTo(null);
+    loadDashboardData();
+    loadUpcomingAppointments();
 }
+   
+private void loadDashboardData() {
+
+    DashboardDAO dao = new DashboardDAO();
+
+    lblCustomersCount.setText(
+        String.valueOf(dao.getTotalCustomers())
+    );
+
+    lblPetsCount.setText(
+        String.valueOf(dao.getTotalPets())
+    );
+
+    lblVetCount.setText(
+        String.valueOf(dao.getTotalVeterinarians())
+    );
+
+    lblAppCount.setText(
+        String.valueOf(dao.getTodaysAppointments())
+    );
+}
+
+private void loadUpcomingAppointments() {
+
+    controller.DashboardDAO dao = new controller.DashboardDAO();
+
+    java.util.List<Object[]> appointments =
+            dao.getUpcomingAppointments();
+
+    javax.swing.table.DefaultTableModel model =
+            (javax.swing.table.DefaultTableModel)
+            tblUpcomingAppointments.getModel();
+
+    model.setRowCount(0);
+
+    for (Object[] appointment : appointments) {
+        model.addRow(appointment);
+    }
+}
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,6 +82,7 @@ public class DashboardView2 extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         pnlContent = new javax.swing.JPanel();
         pnlSidebar = new javax.swing.JPanel();
+        lblSidebarLogo = new javax.swing.JLabel();
         btnDashboard = new javax.swing.JButton();
         btnCustomer = new javax.swing.JButton();
         btnPet = new javax.swing.JButton();
@@ -48,13 +91,6 @@ public class DashboardView2 extends javax.swing.JFrame {
         btnPayment = new javax.swing.JButton();
         btnReport = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         pnlCustomersCard = new javax.swing.JPanel();
         lblCustomersTitle = new javax.swing.JLabel();
         lblCustomersCount = new javax.swing.JLabel();
@@ -81,7 +117,7 @@ public class DashboardView2 extends javax.swing.JFrame {
 
         pnlMain.setLayout(new java.awt.BorderLayout());
 
-        pnlHeader.setBackground(new java.awt.Color(255, 255, 255));
+        pnlHeader.setBackground(new java.awt.Color(204, 204, 204));
         pnlHeader.setPreferredSize(new java.awt.Dimension(880, 70));
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
@@ -126,140 +162,118 @@ public class DashboardView2 extends javax.swing.JFrame {
         pnlSidebar.setBackground(new java.awt.Color(24, 35, 59));
         pnlSidebar.setPreferredSize(new java.awt.Dimension(100, 220));
 
+        lblSidebarLogo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblSidebarLogo.setForeground(new java.awt.Color(255, 255, 255));
+        lblSidebarLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSidebarLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-paw-48.png"))); // NOI18N
+        lblSidebarLogo.setText(" PawCare");
+
         btnDashboard.setBackground(new java.awt.Color(24, 35, 56));
         btnDashboard.setForeground(new java.awt.Color(255, 255, 255));
+        btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-dashboard-16.png"))); // NOI18N
         btnDashboard.setText("Dashboard");
-        btnDashboard.setPreferredSize(new java.awt.Dimension(200, 42));
+        btnDashboard.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btnDashboard.setIconTextGap(18);
+        btnDashboard.setPreferredSize(new java.awt.Dimension(215, 42));
 
         btnCustomer.setBackground(new java.awt.Color(24, 35, 56));
         btnCustomer.setForeground(new java.awt.Color(255, 255, 255));
+        btnCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-customers-16.png"))); // NOI18N
         btnCustomer.setText("Customers");
-        btnCustomer.setPreferredSize(new java.awt.Dimension(200, 42));
+        btnCustomer.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btnCustomer.setIconTextGap(18);
+        btnCustomer.setPreferredSize(new java.awt.Dimension(215, 42));
+        btnCustomer.addActionListener(this::btnCustomerActionPerformed);
 
         btnPet.setBackground(new java.awt.Color(24, 35, 56));
         btnPet.setForeground(new java.awt.Color(255, 255, 255));
+        btnPet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-paw-16.png"))); // NOI18N
         btnPet.setText("Pets");
-        btnPet.setPreferredSize(new java.awt.Dimension(200, 42));
+        btnPet.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btnPet.setIconTextGap(18);
+        btnPet.setPreferredSize(new java.awt.Dimension(215, 42));
         btnPet.addActionListener(this::btnPetActionPerformed);
 
         btnVet.setBackground(new java.awt.Color(24, 35, 56));
         btnVet.setForeground(new java.awt.Color(255, 255, 255));
+        btnVet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-stethoscope-16.png"))); // NOI18N
         btnVet.setText("Veterinarians");
-        btnVet.setPreferredSize(new java.awt.Dimension(200, 42));
+        btnVet.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btnVet.setIconTextGap(18);
+        btnVet.setPreferredSize(new java.awt.Dimension(215, 42));
 
         btnAppointments.setBackground(new java.awt.Color(24, 35, 56));
         btnAppointments.setForeground(new java.awt.Color(255, 255, 255));
-        btnAppointments.setText("Appointments ");
-        btnAppointments.setPreferredSize(new java.awt.Dimension(200, 42));
+        btnAppointments.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-calendar-16.png"))); // NOI18N
+        btnAppointments.setText("Appointments");
+        btnAppointments.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btnAppointments.setIconTextGap(18);
+        btnAppointments.setPreferredSize(new java.awt.Dimension(215, 42));
         btnAppointments.addActionListener(this::btnAppointmentsActionPerformed);
 
         btnPayment.setBackground(new java.awt.Color(24, 35, 56));
         btnPayment.setForeground(new java.awt.Color(255, 255, 255));
+        btnPayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-wallet-16.png"))); // NOI18N
         btnPayment.setText("Payments");
-        btnPayment.setPreferredSize(new java.awt.Dimension(200, 42));
+        btnPayment.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btnPayment.setIconTextGap(18);
+        btnPayment.setPreferredSize(new java.awt.Dimension(215, 42));
         btnPayment.addActionListener(this::btnPaymentActionPerformed);
 
         btnReport.setBackground(new java.awt.Color(24, 35, 56));
         btnReport.setForeground(new java.awt.Color(255, 255, 255));
+        btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-chart-16.png"))); // NOI18N
         btnReport.setText("Reports");
-        btnReport.setPreferredSize(new java.awt.Dimension(200, 42));
+        btnReport.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        btnReport.setIconTextGap(18);
+        btnReport.setPreferredSize(new java.awt.Dimension(215, 42));
 
         btnLogout.setBackground(new java.awt.Color(220, 76, 76));
         btnLogout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLogout.setForeground(new java.awt.Color(255, 255, 255));
         btnLogout.setText("Logout");
-        btnLogout.setPreferredSize(new java.awt.Dimension(200, 42));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-paw-16.png"))); // NOI18N
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-dashboard-16.png"))); // NOI18N
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-customers-16.png"))); // NOI18N
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-stethoscope-16.png"))); // NOI18N
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-calendar-16.png"))); // NOI18N
-
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-wallet-16.png"))); // NOI18N
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-chart-16.png"))); // NOI18N
+        btnLogout.setPreferredSize(new java.awt.Dimension(215, 42));
 
         javax.swing.GroupLayout pnlSidebarLayout = new javax.swing.GroupLayout(pnlSidebar);
         pnlSidebar.setLayout(pnlSidebarLayout);
         pnlSidebarLayout.setHorizontalGroup(
             pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSidebarLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAppointments, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnDashboard, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                        .addComponent(btnCustomer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(btnPet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(btnVet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap(42, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSidebarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(24, 24, 24)
+                .addGroup(pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblSidebarLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAppointments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPayment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         pnlSidebarLayout.setVerticalGroup(
             pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSidebarLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlSidebarLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabel3)
-                        .addGap(47, 47, 47))
-                    .addGroup(pnlSidebarLayout.createSequentialGroup()
-                        .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)))
-                .addGroup(pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pnlSidebarLayout.createSequentialGroup()
-                        .addComponent(btnPet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnVet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnAppointments, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlSidebarLayout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10)
-                        .addGap(12, 12, 12)))
-                .addGroup(pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlSidebarLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(jLabel11))
-                    .addGroup(pnlSidebarLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(pnlSidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlSidebarLayout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel12))
-                    .addGroup(pnlSidebarLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
+                .addComponent(lblSidebarLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(btnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(btnCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(btnPet, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(btnVet, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(btnAppointments, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(btnReport, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlCustomersCard.setBackground(new java.awt.Color(227, 242, 253));
@@ -473,8 +487,8 @@ public class DashboardView2 extends javax.swing.JFrame {
                         .addComponent(lblUpcomingTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlUpcomingAppointmentsLayout.createSequentialGroup()
                         .addGap(69, 69, 69)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(246, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         pnlUpcomingAppointmentsLayout.setVerticalGroup(
             pnlUpcomingAppointmentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -541,6 +555,13 @@ public class DashboardView2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPaymentActionPerformed
 
+    private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
+         CustomerForm form = new CustomerForm();
+         form.setLocationRelativeTo(null);
+         form.setVisible(true);
+         this.dispose();
+    }//GEN-LAST:event_btnCustomerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -576,18 +597,11 @@ public class DashboardView2 extends javax.swing.JFrame {
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btnVet;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAppCount;
     private javax.swing.JLabel lblAppointments;
@@ -595,6 +609,7 @@ public class DashboardView2 extends javax.swing.JFrame {
     private javax.swing.JLabel lblCustomersTitle;
     private javax.swing.JLabel lblPetsCount;
     private javax.swing.JLabel lblPetsTitle;
+    private javax.swing.JLabel lblSidebarLogo;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblUpcomingTitle;
     private javax.swing.JLabel lblVetCount;

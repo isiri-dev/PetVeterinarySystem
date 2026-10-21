@@ -71,24 +71,25 @@ public class PaymentDAO {
     
     public boolean updatePayment(Payment payment) throws SQLException {
 
-        String sql = "UPDATE payments SET "
-                + "appointment_id = ?, amount = ?, payment_date = ?, "
-                + "payment_method = ?, payment_status = ? "
-                + "WHERE payment_id = ?";
+    String sql = "UPDATE payments SET "
+            + "appointment_id = ?, "
+            + "amount = ?, "
+            + "payment_method = ?, "
+            + "payment_status = ? "
+            + "WHERE payment_id = ?";
 
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
+    try (Connection con = DBConnection.getConnection();
+         PreparedStatement pst = con.prepareStatement(sql)) {
 
-            pst.setInt(1, payment.getAppointmentId());
-            pst.setDouble(2, payment.getAmount());
-            pst.setTimestamp(3, payment.getPaymentDate());
-            pst.setString(4, payment.getPaymentMethod());
-            pst.setString(5, payment.getPaymentStatus());
-            pst.setInt(6, payment.getPaymentId());
+        pst.setInt(1, payment.getAppointmentId());
+        pst.setDouble(2, payment.getAmount());
+        pst.setString(3, payment.getPaymentMethod());
+        pst.setString(4, payment.getPaymentStatus());
+        pst.setInt(5, payment.getPaymentId());
 
-            return pst.executeUpdate() > 0;
-        }
+        return pst.executeUpdate() > 0;
     }
+}
 
     
     public boolean deletePayment(int paymentId) throws SQLException {

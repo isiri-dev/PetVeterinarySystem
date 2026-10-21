@@ -24,8 +24,8 @@ public class CustomerForm extends javax.swing.JFrame {
         initComponents();
         setupCustomerTable();
         loadCustomers();
-           setSize(1420, 800);       // about the width of your content
-           setLocationRelativeTo(null); // center on screen
+           setSize(1420, 800);       
+           setLocationRelativeTo(null); 
     }
     
     private void setupCustomerTable() {
@@ -188,14 +188,14 @@ public class CustomerForm extends javax.swing.JFrame {
         txtPhone.setBackground(new java.awt.Color(255, 255, 255));
         txtPhone.setText("Tel Number");
 
-        Addbtn.setBackground(new java.awt.Color(41, 98, 255));
+        Addbtn.setBackground(new java.awt.Color(21, 101, 192));
         Addbtn.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         Addbtn.setForeground(new java.awt.Color(255, 255, 255));
         Addbtn.setText("Add");
         Addbtn.setPreferredSize(new java.awt.Dimension(130, 40));
         Addbtn.addActionListener(this::AddbtnActionPerformed);
 
-        Updatebtn.setBackground(new java.awt.Color(34, 139, 94));
+        Updatebtn.setBackground(new java.awt.Color(4, 120, 87));
         Updatebtn.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         Updatebtn.setText("Update");
         Updatebtn.setPreferredSize(new java.awt.Dimension(130, 40));
@@ -222,9 +222,9 @@ public class CustomerForm extends javax.swing.JFrame {
                 .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(CustomerDetailspnlLayout.createSequentialGroup()
-                        .addGap(108, 108, 108)
+                        .addGap(101, 101, 101)
                         .addComponent(Addbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85)
+                        .addGap(92, 92, 92)
                         .addComponent(Updatebtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(79, 79, 79)
                         .addComponent(Deletebtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,15 +239,11 @@ public class CustomerForm extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(41, 41, 41)
                 .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CustomerDetailspnlLayout.createSequentialGroup()
-                        .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(216, 216, 216))
-                    .addGroup(CustomerDetailspnlLayout.createSequentialGroup()
-                        .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                            .addComponent(txtCustomerId))
-                        .addGap(2, 2, 2)))
-                .addGap(13, 13, 13)
+                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                        .addComponent(txtCustomerId)))
+                .addGap(229, 229, 229)
                 .addGroup(CustomerDetailspnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -343,8 +339,8 @@ public class CustomerForm extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         jLabel9.getAccessibleContext().setAccessibleName("Search Customer");

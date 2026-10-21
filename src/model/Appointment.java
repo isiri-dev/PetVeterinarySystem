@@ -75,7 +75,7 @@ public class Appointment {
     public double getServiceFee() {
         return serviceFee;
     }
-
+ 
     public void setServiceFee(double serviceFee) {
         this.serviceFee = serviceFee;
     }
