@@ -104,4 +104,33 @@ public class PaymentDAO {
             return pst.executeUpdate() > 0;
         }
     }
+
+    public List<Payment> searchPayments(String keyword) throws SQLException {
+        List<Payment> payments = new ArrayList<>();
+        String sql = "SELECT * FROM payments WHERE CAST(payment_id AS CHAR) LIKE ? OR CAST(appointment_id AS CHAR) LIKE ? OR payment_method LIKE ? OR payment_status LIKE ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            String term = "%" + keyword + "%";
+            pst.setString(1, term);
+            pst.setString(2, term);
+            pst.setString(3, term);
+            pst.setString(4, term);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Payment payment = new Payment();
+                    payment.setPaymentId(rs.getInt("payment_id"));
+                    payment.setAppointmentId(rs.getInt("appointment_id"));
+                    payment.setAmount(rs.getDouble("amount"));
+                    payment.setPaymentDate(rs.getTimestamp("payment_date"));
+                    payment.setPaymentMethod(rs.getString("payment_method"));
+                    payment.setPaymentStatus(rs.getString("payment_status"));
+                    payments.add(payment);
+                }
+            }
+        }
+        return payments;
+    }
 }

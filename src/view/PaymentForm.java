@@ -19,13 +19,11 @@ public class PaymentForm extends javax.swing.JFrame {
     private final PaymentDAO paymentDAO = new PaymentDAO();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PaymentForm.class.getName());
 
-    /**
-     * Creates new form PaymentForm
-     */
+    
     public PaymentForm() {
         initComponents();
-        
-         setLocationRelativeTo(null);
+        setupSidebar();
+        setLocationRelativeTo(null);
 
     
     txtPaymentId.setEditable(false);
@@ -46,6 +44,23 @@ public class PaymentForm extends javax.swing.JFrame {
 
     
     loadPayments();
+    }
+
+    private void setupSidebar() {
+        getContentPane().removeAll();
+        getContentPane().setLayout(new java.awt.BorderLayout());
+
+        sideBarPanel sidebar = new sideBarPanel("Payments", this);
+        getContentPane().add(sidebar, java.awt.BorderLayout.WEST);
+
+        javax.swing.JPanel rightPanel = new javax.swing.JPanel(new java.awt.BorderLayout());
+        rightPanel.add(jPanel1, java.awt.BorderLayout.NORTH);
+        rightPanel.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(rightPanel, java.awt.BorderLayout.CENTER);
+        setSize(1280, 800);
+        getContentPane().revalidate();
+        getContentPane().repaint();
     }
 
    
@@ -383,7 +398,7 @@ private void setupPaymentTable() {
 }
 
 
-// Load payments
+
 private void loadPayments() {
     try {
         DefaultTableModel model =

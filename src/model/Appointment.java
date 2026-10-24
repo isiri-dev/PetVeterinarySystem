@@ -15,6 +15,8 @@ public class Appointment {
     private String serviceDescription;
     private double serviceFee;
     private String status;
+    private String petName;
+    private String vetName;
 
     public Appointment() {
     }
@@ -30,6 +32,21 @@ public class Appointment {
         this.serviceDescription = serviceDescription;
         this.serviceFee = serviceFee;
         this.status = status;
+    }
+
+    public Appointment(int appointmentId, int petId, int vetId,
+            Timestamp appointmentDate, String serviceDescription,
+            double serviceFee, String status, String petName, String vetName) {
+
+        this.appointmentId = appointmentId;
+        this.petId = petId;
+        this.vetId = vetId;
+        this.appointmentDate = appointmentDate;
+        this.serviceDescription = serviceDescription;
+        this.serviceFee = serviceFee;
+        this.status = status;
+        this.petName = petName;
+        this.vetName = vetName;
     }
 
     public int getAppointmentId() {
@@ -86,5 +103,21 @@ public class Appointment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPetName() {
+        return petName;
+    }
+
+    public void setPetName(String petName) {
+        this.petName = petName;
+    }
+
+    public String getVetName() {
+        return vetName;
+    }
+
+    public void setVetName(String vetName) {
+        this.vetName = vetName;
     }
 }

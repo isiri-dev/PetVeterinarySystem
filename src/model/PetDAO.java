@@ -96,6 +96,34 @@ public class PetDAO {
             return pst.executeUpdate() > 0;
         }
     }
-    
-    
+
+    public List<Pet> searchPets(String keyword) throws SQLException {
+        List<Pet> pets = new ArrayList<>();
+        String sql = "SELECT pet_id, customer_id, pet_name, species, breed, age FROM pets "
+                + "WHERE pet_name LIKE ? OR species LIKE ? OR breed LIKE ? OR CAST(pet_id AS CHAR) LIKE ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            String term = "%" + keyword + "%";
+            pst.setString(1, term);
+            pst.setString(2, term);
+            pst.setString(3, term);
+            pst.setString(4, term);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Pet pet = new Pet();
+                    pet.setPetId(rs.getInt("pet_id"));
+                    pet.setCustomerId(rs.getInt("customer_id"));
+                    pet.setPetName(rs.getString("pet_name"));
+                    pet.setSpecies(rs.getString("species"));
+                    pet.setBreed(rs.getString("breed"));
+                    pet.setAge(rs.getInt("age"));
+                    pets.add(pet);
+                }
+            }
+        }
+        return pets;
+    }
 }

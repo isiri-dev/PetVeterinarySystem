@@ -88,4 +88,31 @@ public class VeterinarianDAO {
             return pst.executeUpdate() > 0;
         }
     }
+
+    public List<Veterinarian> searchVeterinarians(String keyword) throws SQLException {
+        List<Veterinarian> veterinarians = new ArrayList<>();
+        String sql = "SELECT * FROM veterinarians WHERE full_name LIKE ? OR specialization LIKE ? OR phone LIKE ? OR CAST(vet_id AS CHAR) LIKE ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement pst = con.prepareStatement(sql)) {
+
+            String term = "%" + keyword + "%";
+            pst.setString(1, term);
+            pst.setString(2, term);
+            pst.setString(3, term);
+            pst.setString(4, term);
+
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Veterinarian vet = new Veterinarian();
+                    vet.setVetId(rs.getInt("vet_id"));
+                    vet.setName(rs.getString("full_name"));
+                    vet.setPhone(rs.getString("phone"));
+                    vet.setSpecialization(rs.getString("specialization"));
+                    veterinarians.add(vet);
+                }
+            }
+        }
+        return veterinarians;
+    }
 }
