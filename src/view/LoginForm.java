@@ -273,7 +273,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void lblForgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotPasswordMouseClicked
         JOptionPane.showMessageDialog(this,
-            "Please contact the clinic system administrator to reset your credentials.Phone: 0755422904-PAWS",
+            "Please contact the clinic system administrator to reset your credentials",
             "Forgot Password",
             JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_lblForgotPasswordMouseClicked
