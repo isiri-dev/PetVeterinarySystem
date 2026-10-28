@@ -12,26 +12,36 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    public String authenticateUser(String username, String password)
-            throws SQLException {
 
-        String sql = "SELECT role FROM users "
-                   + "WHERE username = ? AND password = ?";
+public String authenticateUser(String username, String password)
+        throws SQLException {
 
-        try (Connection con = DBConnection.getConnection();
-             PreparedStatement pst = con.prepareStatement(sql)) {
+    String sql = "SELECT role FROM users "
+               + "WHERE username = ? AND password = ?";
 
-            pst.setString(1, username);
-            pst.setString(2, password);
+    try (Connection con = DBConnection.getConnection();
+         PreparedStatement pst = con.prepareStatement(sql)) {
 
-            try (ResultSet rs = pst.executeQuery()) {
+        pst.setString(1, username);
+        pst.setString(2, password);
 
-                if (rs.next()) {
-                    return rs.getString("role");
+        try (ResultSet rs = pst.executeQuery()) {
+
+            if (rs.next()) {
+                String role = rs.getString("role");
+
+                if (role.equalsIgnoreCase("Admin")) {
+                    return "admin";
+                } else if (role.equalsIgnoreCase("Veterinarian")
+                        || role.equalsIgnoreCase("vet")) {
+                    return "vet";
                 }
             }
         }
-
-        return null;
     }
+
+    return null;
+}
+
+
 }

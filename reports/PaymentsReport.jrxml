@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport name="PaymentsReport" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenNoDataType="AllSectionsNoDetail" uuid="48321004-0000-4000-8000-000000000000">
+	<query language="sql"><![CDATA[SELECT payment_id, appointment_id, CAST(amount AS DECIMAL(12,2)) AS amount, payment_date, payment_method, payment_status FROM payments ORDER BY payment_date DESC]]></query>
+	<field name="payment_id" class="java.lang.Integer"/>
+	<field name="appointment_id" class="java.lang.Integer"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="payment_date" class="java.util.Date"/>
+	<field name="payment_method" class="java.lang.String"/>
+	<field name="payment_status" class="java.lang.String"/>
+	<variable name="GrandTotal" class="java.math.BigDecimal" calculation="Sum"><expression><![CDATA[$F{amount}]]></expression></variable>
+	<title height="70">
+		<element kind="staticText" x="0" y="8" width="802" height="32" fontName="SansSerif" fontSize="22.0" bold="true" hTextAlign="Center" vTextAlign="Middle"><text><![CDATA[Pet Veterinary System]]></text><box leftPadding="6" rightPadding="6"/></element>
+		<element kind="staticText" x="0" y="38" width="802" height="22" fontName="SansSerif" fontSize="14.0" bold="true" hTextAlign="Center" vTextAlign="Middle" forecolor="#1F3A5F"><text><![CDATA[Payments Report]]></text><box leftPadding="6" rightPadding="6"/></element>
+		<element kind="line" x="0" y="64" width="802" height="1" forecolor="#1F3A5F"><pen lineWidth="2.0" lineColor="#1F3A5F"/></element>
+	</title>
+	<columnHeader height="30">
+		<element kind="staticText" x="0" y="4" width="90" height="24" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle" forecolor="#FFFFFF" mode="Opaque" backcolor="#1F3A5F"><text><![CDATA[Payment ID]]></text><box leftPadding="6" rightPadding="6"/></element>
+		<element kind="staticText" x="90" y="4" width="120" height="24" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Center" vTextAlign="Middle" forecolor="#FFFFFF" mode="Opaque" backcolor="#1F3A5F"><text><![CDATA[Appointment ID]]></text><box leftPadding="6" rightPadding="6"/></element>
+		<element kind="staticText" x="210" y="4" width="120" height="24" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Right" vTextAlign="Middle" forecolor="#FFFFFF" mode="Opaque" backcolor="#1F3A5F"><text><![CDATA[Amount]]></text><box leftPadding="6" rightPadding="6"/></element>
+		<element kind="staticText" x="330" y="4" width="180" height="24" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Left" vTextAlign="Middle" forecolor="#FFFFFF" mode="Opaque" backcolor="#1F3A5F"><text><![CDATA[Payment Date]]></text><box leftPadding="6" rightPadding="6"/></element>
+		<element kind="staticText" x="510" y="4" width="150" height="24" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Left" vTextAlign="Middle" forecolor="#FFFFFF" mode="Opaque" backcolor="#1F3A5F"><text><![CDATA[Method]]></text><box leftPadding="6" rightPadding="6"/></element>
+		<element kind="staticText" x="660" y="4" width="142" height="24" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Left" vTextAlign="Middle" forecolor="#FFFFFF" mode="Opaque" backcolor="#1F3A5F"><text><![CDATA[Status]]></text><box leftPadding="6" rightPadding="6"/></element>
+	</columnHeader>
+	<detail>
+		<band height="26">
+			<element kind="rectangle" mode="Opaque" x="0" y="0" width="802" height="26" forecolor="#F3F6FA" backcolor="#F3F6FA"><printWhenExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></printWhenExpression><pen lineWidth="0.0"/></element>
+			<element kind="textField" x="0" y="0" width="90" height="26" fontName="SansSerif" fontSize="10.0" bold="false" hTextAlign="Center" vTextAlign="Middle" blankWhenNull="true" textAdjust="StretchHeight"><expression><![CDATA[$F{payment_id}]]></expression><box leftPadding="6" rightPadding="6"/></element>
+			<element kind="textField" x="90" y="0" width="120" height="26" fontName="SansSerif" fontSize="10.0" bold="false" hTextAlign="Center" vTextAlign="Middle" blankWhenNull="true" textAdjust="StretchHeight"><expression><![CDATA[$F{appointment_id}]]></expression><box leftPadding="6" rightPadding="6"/></element>
+			<element kind="textField" x="210" y="0" width="120" height="26" fontName="SansSerif" fontSize="10.0" bold="false" hTextAlign="Right" vTextAlign="Middle" pattern="#,##0.00" blankWhenNull="true" textAdjust="StretchHeight"><expression><![CDATA[$F{amount}]]></expression><box leftPadding="6" rightPadding="6"/></element>
+			<element kind="textField" x="330" y="0" width="180" height="26" fontName="SansSerif" fontSize="10.0" bold="false" hTextAlign="Left" vTextAlign="Middle" pattern="yyyy-MM-dd HH:mm" blankWhenNull="true" textAdjust="StretchHeight"><expression><![CDATA[$F{payment_date}]]></expression><box leftPadding="6" rightPadding="6"/></element>
+			<element kind="textField" x="510" y="0" width="150" height="26" fontName="SansSerif" fontSize="10.0" bold="false" hTextAlign="Left" vTextAlign="Middle" blankWhenNull="true" textAdjust="StretchHeight"><expression><![CDATA[$F{payment_method}]]></expression><box leftPadding="6" rightPadding="6"/></element>
+			<element kind="textField" x="660" y="0" width="142" height="26" fontName="SansSerif" fontSize="10.0" bold="false" hTextAlign="Left" vTextAlign="Middle" blankWhenNull="true" textAdjust="StretchHeight"><expression><![CDATA[$F{payment_status}]]></expression><box leftPadding="6" rightPadding="6"/></element>
+			<element kind="line" x="0" y="25" width="802" height="1" forecolor="#D0D7E2"><pen lineWidth="0.75" lineColor="#D0D7E2"/></element>
+		</band>
+	</detail>
+	<pageFooter height="28">
+		<element kind="line" x="0" y="2" width="802" height="1" forecolor="#D0D7E2"><pen lineWidth="1.0" lineColor="#D0D7E2"/></element>
+		<element kind="textField" x="0" y="6" width="250" height="18" fontName="SansSerif" fontSize="9.0" bold="false" hTextAlign="Left" vTextAlign="Middle" forecolor="#666666" pattern="yyyy-MM-dd HH:mm" blankWhenNull="true" textAdjust="StretchHeight"><expression><![CDATA[new java.util.Date()]]></expression><box leftPadding="0" rightPadding="0"/></element>
+		<element kind="textField" x="602" y="6" width="200" height="18" fontName="SansSerif" fontSize="9.0" bold="false" hTextAlign="Right" vTextAlign="Middle" forecolor="#666666" blankWhenNull="true" textAdjust="StretchHeight"><expression><![CDATA["Page " + $V{PAGE_NUMBER}]]></expression><box leftPadding="0" rightPadding="0"/></element>
+	</pageFooter>
+	<summary height="60">
+		<element kind="textField" x="502" y="8" width="300" height="22" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Right" vTextAlign="Middle" blankWhenNull="true" textAdjust="StretchHeight"><expression><![CDATA["Total Records: " + $V{REPORT_COUNT}]]></expression><box leftPadding="0" rightPadding="0"/></element>
+		<element kind="textField" x="502" y="30" width="300" height="22" fontName="SansSerif" fontSize="11.0" bold="true" hTextAlign="Right" vTextAlign="Middle" blankWhenNull="true" textAdjust="StretchHeight"><expression><![CDATA["Total Amount: " + new java.text.DecimalFormat("#,##0.00").format($V{GrandTotal} == null ? java.math.BigDecimal.ZERO : $V{GrandTotal})]]></expression><box leftPadding="0" rightPadding="0"/></element>
+	</summary>
+</jasperReport>

@@ -13,6 +13,10 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.table.JTableHeader;
 
 public class PaymentForm extends javax.swing.JFrame {
     
@@ -23,6 +27,7 @@ public class PaymentForm extends javax.swing.JFrame {
     public PaymentForm() {
         initComponents();
         setupSidebar();
+        setupTableProperties();
         setLocationRelativeTo(null);
 
     
@@ -45,7 +50,30 @@ public class PaymentForm extends javax.swing.JFrame {
     
     loadPayments();
     }
+    
 
+private void setupTableProperties() {
+    JTableHeader header = tblPayment.getTableHeader();
+
+    header.setOpaque(true);
+    header.setBackground(new Color(24, 35, 59));
+    header.setForeground(Color.WHITE);
+    header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+    header.setPreferredSize(new Dimension(100, 32));
+    header.setReorderingAllowed(false);
+
+    tblPayment.setRowHeight(28);
+    tblPayment.setBackground(Color.WHITE);
+    tblPayment.setForeground(new Color(24, 35, 59));
+    tblPayment.setSelectionBackground(new Color(41, 98, 255));
+    tblPayment.setSelectionForeground(Color.WHITE);
+
+    header.repaint();
+    tblPayment.repaint();
+}
+
+
+    
     private void setupSidebar() {
         getContentPane().removeAll();
         getContentPane().setLayout(new java.awt.BorderLayout());
@@ -72,6 +100,8 @@ public class PaymentForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPayment = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -87,8 +117,6 @@ public class PaymentForm extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Payment Management");
@@ -97,7 +125,7 @@ public class PaymentForm extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(24, 35, 59));
         jPanel1.setPreferredSize(new java.awt.Dimension(1100, 90));
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Payment Management");
 
@@ -112,7 +140,7 @@ public class PaymentForm extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(1474, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,47 +149,79 @@ public class PaymentForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel1))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(245, 247, 250));
 
+        tblPayment.setBackground(new java.awt.Color(255, 255, 255));
+        tblPayment.setForeground(new java.awt.Color(24, 35, 59));
+        tblPayment.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Payment ID", "Appointment ID", "Amount", "Payment Method", "Payment Status"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblPayment);
+        if (tblPayment.getColumnModel().getColumnCount() > 0) {
+            tblPayment.getColumnModel().getColumn(3).setResizable(false);
+        }
+
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(24, 35, 59));
         jLabel2.setText("Payment ID");
 
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(24, 35, 59));
         jLabel4.setText("Appointment ID");
 
-        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(24, 35, 59));
         jLabel5.setText("Amount");
 
         txtPaymentId.setBackground(new java.awt.Color(255, 255, 255));
         txtPaymentId.setText("Payment ID");
+        txtPaymentId.setMinimumSize(new java.awt.Dimension(68, 28));
+        txtPaymentId.setPreferredSize(new java.awt.Dimension(68, 28));
 
         txtAppointmentID.setBackground(new java.awt.Color(255, 255, 255));
         txtAppointmentID.setText("Appointment ID");
+        txtAppointmentID.setPreferredSize(new java.awt.Dimension(68, 28));
 
         txtAmount.setBackground(new java.awt.Color(255, 255, 255));
         txtAmount.setText("Amount");
+        txtAmount.setPreferredSize(new java.awt.Dimension(68, 28));
 
-        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(24, 35, 59));
         jLabel6.setText("Payment Method");
 
         Cashcmb.setBackground(new java.awt.Color(255, 255, 255));
         Cashcmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash", "Card", "Bank Transfer" }));
+        Cashcmb.setPreferredSize(new java.awt.Dimension(68, 28));
 
-        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(24, 35, 59));
         jLabel7.setText("Payment Status");
 
         Paymentcmb.setBackground(new java.awt.Color(255, 255, 255));
         Paymentcmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Paid", "Pending", " " }));
+        Paymentcmb.setPreferredSize(new java.awt.Dimension(68, 28));
 
         btnAdd.setBackground(new java.awt.Color(21, 101, 192));
         btnAdd.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -197,10 +257,9 @@ public class PaymentForm extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(51, 51, 51)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtAmount, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtPaymentId)
-                                .addComponent(txtAppointmentID, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)))
+                            .addComponent(txtAmount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtAppointmentID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPaymentId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(45, 45, 45)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
@@ -208,7 +267,7 @@ public class PaymentForm extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(99, 99, 99)
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(54, 54, 54)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,7 +281,7 @@ public class PaymentForm extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addGap(102, 102, 102))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +302,7 @@ public class PaymentForm extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,60 +311,37 @@ public class PaymentForm extends javax.swing.JFrame {
                 .addGap(56, 56, 56))
         );
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setForeground(new java.awt.Color(24, 35, 59));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Payment ID", "Appointment ID", "Amount", "Payment Method", "Payment Status"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-        }
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(197, 197, 197)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(144, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addContainerGap(75, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(150, 150, 150))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1162, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 2000, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,32 +402,32 @@ private void setupPaymentTable() {
         }
     };
 
-    jTable1.setModel(model);
+    tblPayment.setModel(model);
 
-    jTable1.getSelectionModel().addListSelectionListener(event -> {
+    tblPayment.getSelectionModel().addListSelectionListener(event -> {
         if (!event.getValueIsAdjusting()
-                && jTable1.getSelectedRow() != -1) {
+                && tblPayment.getSelectedRow() != -1) {
 
-            int row = jTable1.getSelectedRow();
+            int row = tblPayment.getSelectedRow();
 
             txtPaymentId.setText(
-                jTable1.getValueAt(row, 0).toString()
+                tblPayment.getValueAt(row, 0).toString()
             );
 
             txtAppointmentID.setText(
-                jTable1.getValueAt(row, 1).toString()
+                tblPayment.getValueAt(row, 1).toString()
             );
 
             txtAmount.setText(
-                jTable1.getValueAt(row, 2).toString()
+                tblPayment.getValueAt(row, 2).toString()
             );
 
             Cashcmb.setSelectedItem(
-                jTable1.getValueAt(row, 3).toString()
+                tblPayment.getValueAt(row, 3).toString()
             );
 
             Paymentcmb.setSelectedItem(
-                jTable1.getValueAt(row, 4).toString()
+                tblPayment.getValueAt(row, 4).toString()
             );
         }
     });
@@ -402,7 +438,7 @@ private void setupPaymentTable() {
 private void loadPayments() {
     try {
         DefaultTableModel model =
-            (DefaultTableModel) jTable1.getModel();
+            (DefaultTableModel) tblPayment.getModel();
 
         model.setRowCount(0);
 
@@ -539,7 +575,7 @@ private void updatePayment() {
         payment.setAmount(amount);
 
         
-        int selectedRow = jTable1.getSelectedRow();
+        int selectedRow = tblPayment.getSelectedRow();
 
         if (selectedRow >= 0) {
             
@@ -629,7 +665,7 @@ private void clearFields() {
     Cashcmb.setSelectedIndex(0);
     Paymentcmb.setSelectedIndex(0);
 
-    jTable1.clearSelection();
+    tblPayment.clearSelection();
     txtAppointmentID.requestFocusInWindow();
 }
     
@@ -653,7 +689,7 @@ private void clearFields() {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblPayment;
     private javax.swing.JTextField txtAmount;
     private javax.swing.JTextField txtAppointmentID;
     private javax.swing.JTextField txtPaymentId;

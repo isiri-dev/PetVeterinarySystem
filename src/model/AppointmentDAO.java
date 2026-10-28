@@ -64,7 +64,7 @@ public class AppointmentDAO {
                 + "FROM appointments a "
                 + "LEFT JOIN pets p ON a.pet_id = p.pet_id "
                 + "LEFT JOIN veterinarians v ON a.vet_id = v.vet_id "
-                + "ORDER BY a.appointment_date DESC";
+                + "ORDER BY a.appointment_id ASC";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql);

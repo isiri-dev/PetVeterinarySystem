@@ -43,7 +43,13 @@ public class LoginForm extends javax.swing.JFrame {
                 btnSignIn.setBackground(new java.awt.Color(24, 35, 59));
             }
         });
+        lblForgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent evt) {
+        lblForgotPasswordMouseClicked(evt);
     }
+      });
+ }
 
     
     @SuppressWarnings("unchecked")
@@ -253,10 +259,9 @@ public class LoginForm extends javax.swing.JFrame {
 
     } catch (java.sql.SQLException e) {
 
-        JOptionPane.showMessageDialog(
-                this,
-                "Unable to connect to the database.\n"
-                + "Please check your database connection.",
+        JOptionPane.showMessageDialog(this, """
+                                            Unable to connect to the database.
+                                            Please check your database connection.""",
                 "Database Error",
                 JOptionPane.ERROR_MESSAGE
         );
@@ -292,10 +297,8 @@ public class LoginForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginForm().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new LoginForm().setVisible(true);
         });
     }
 

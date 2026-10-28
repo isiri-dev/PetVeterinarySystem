@@ -4,7 +4,6 @@
  */
 package view;
 
-import database.DBConnection;
 import model.Appointment;
 import model.AppointmentDAO;
 import model.Pet;
@@ -190,6 +189,7 @@ public class AppointmentForm extends javax.swing.JFrame {
 
     private void loadAppointments() {
         try {
+            
             tableModel.setRowCount(0);
             currentAppointmentList = appointmentDAO.getAllAppointments();
 
@@ -300,7 +300,7 @@ public class AppointmentForm extends javax.swing.JFrame {
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblMainHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblSubtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 317, Short.MAX_VALUE)
                 .addComponent(lblAdminGreeting, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
@@ -323,6 +323,7 @@ public class AppointmentForm extends javax.swing.JFrame {
         pnlRightContent.add(pnlHeader, java.awt.BorderLayout.NORTH);
 
         pnlMain.setBackground(new java.awt.Color(245, 247, 250));
+        pnlMain.setPreferredSize(new java.awt.Dimension(1000, 300));
 
         pnlFormCard.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -444,7 +445,8 @@ public class AppointmentForm extends javax.swing.JFrame {
                             .addComponent(lblAppointmentTime)
                             .addComponent(lblDescription))
                         .addGap(15, 15, 15)
-                        .addGroup(pnlFormCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(pnlFormCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPaneDesc)
                             .addGroup(pnlFormCardLayout.createSequentialGroup()
                                 .addGroup(pnlFormCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(cmbPet, 0, 180, Short.MAX_VALUE)
@@ -454,13 +456,12 @@ public class AppointmentForm extends javax.swing.JFrame {
                                     .addComponent(lblVeterinarian)
                                     .addComponent(lblStatus))
                                 .addGap(15, 15, 15)
-                                .addGroup(pnlFormCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cmbVeterinarian, 0, 200, Short.MAX_VALUE)
-                                    .addComponent(cmbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jScrollPaneDesc))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(pnlFormCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbVeterinarian, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormCardLayout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
+                .addContainerGap(150, Short.MAX_VALUE)
                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -468,12 +469,12 @@ public class AppointmentForm extends javax.swing.JFrame {
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
         pnlFormCardLayout.setVerticalGroup(
             pnlFormCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFormCardLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addComponent(lblDetailsHeading)
                 .addGap(18, 18, 18)
                 .addGroup(pnlFormCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -595,8 +596,8 @@ public class AppointmentForm extends javax.swing.JFrame {
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pnlRightContent.add(pnlMain, java.awt.BorderLayout.CENTER);

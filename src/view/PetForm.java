@@ -4,20 +4,17 @@
  */
 package view;
 
-import database.DBConnection;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import model.Customer;
 import model.CustomerDAO;
 import model.Pet;
@@ -30,7 +27,32 @@ public class PetForm extends javax.swing.JFrame {
     private final CustomerDAO customerDAO = new CustomerDAO();
     private DefaultTableModel tableModel;
     private final Map<Integer, String> customerNameCache = new HashMap<>();
+    
+    private void setupSidebar() {
 
+    getContentPane().removeAll();
+
+    getContentPane().setLayout(new java.awt.BorderLayout());
+
+    sideBarPanel sidebar = new sideBarPanel("Pets", this);
+
+    getContentPane().add(sidebar, java.awt.BorderLayout.WEST);
+
+    javax.swing.JPanel rightPanel =
+            new javax.swing.JPanel(new java.awt.BorderLayout());
+
+    rightPanel.add(jPanel1, java.awt.BorderLayout.NORTH);
+
+    rightPanel.add(pnlMain, java.awt.BorderLayout.CENTER);
+
+    getContentPane().add(rightPanel, java.awt.BorderLayout.CENTER);
+
+    getContentPane().revalidate();
+
+    getContentPane().repaint();
+    
+    }
+    
     public static class CustomerItem {
         private final int customerId;
         private final String customerName;
@@ -57,6 +79,7 @@ public class PetForm extends javax.swing.JFrame {
     public PetForm() {
         initComponents();
         setupVisuals();
+        setupSidebar();
         loadCustomerDropdown();
         loadPets();
         setSize(1280, 800);
@@ -69,35 +92,46 @@ public class PetForm extends javax.swing.JFrame {
     }
 
     private void setupVisuals() {
-        tableModel = (DefaultTableModel) tblPets.getModel();
-        tblPets.setRowHeight(28);
-        tblPets.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        tblPets.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
-        tblPets.getTableHeader().setBackground(new Color(241, 245, 249));
-        tblPets.getTableHeader().setForeground(new Color(24, 35, 59));
-        tblPets.setSelectionBackground(new Color(224, 231, 255));
-        tblPets.setSelectionForeground(new Color(24, 35, 59));
+    tableModel = (DefaultTableModel) tblPets.getModel();
 
-        btnAdd.addActionListener(evt -> addPet());
-        btnUpdate.addActionListener(evt -> updatePet());
-        btnDelete.addActionListener(evt -> deletePet());
-        btnClear.addActionListener(evt -> clearForm());
-        btnSearch.addActionListener(evt -> searchPets());
-        btnRefresh.addActionListener(evt -> {
-            txtSearch.setText("");
-            loadCustomerDropdown();
-            loadPets();
-            clearForm();
-        });
-        txtSearch.addActionListener(evt -> searchPets());
+    JTableHeader header = tblPets.getTableHeader();
+    header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+    header.setBackground(new Color(24, 35, 59));
+    header.setForeground(Color.WHITE);
+    header.setPreferredSize(
+            new Dimension(header.getPreferredSize().width, 32)
+    );
+    header.setReorderingAllowed(false);
 
-        tblPets.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblPetsMouseClicked(evt);
-            }
-        });
-    }
+    tblPets.setRowHeight(28);
+    tblPets.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+    tblPets.setBackground(Color.WHITE);
+    tblPets.setForeground(new Color(24, 35, 59));
+    tblPets.setSelectionBackground(new Color(41, 98, 255));
+    tblPets.setSelectionForeground(Color.WHITE);
+
+    btnAdd.addActionListener(evt -> addPet());
+    btnUpdate.addActionListener(evt -> updatePet());
+    btnDelete.addActionListener(evt -> deletePet());
+    btnClear.addActionListener(evt -> clearForm());
+    btnSearch.addActionListener(evt -> searchPets());
+
+    btnRefresh.addActionListener(evt -> {
+        txtSearch.setText("");
+        loadCustomerDropdown();
+        loadPets();
+        clearForm();
+    });
+
+    txtSearch.addActionListener(evt -> searchPets());
+
+    tblPets.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            tblPetsMouseClicked(evt);
+        }
+    });
+}
 
     private void loadCustomerDropdown() {
         cmbCustomer.removeAllItems();
@@ -178,21 +212,33 @@ public class PetForm extends javax.swing.JFrame {
             return;
         }
 
-        int age;
-        try {
-            age = Integer.parseInt(ageStr);
-            if (age < 0 || age > 100) {
-                JOptionPane.showMessageDialog(this,
-                        "Please enter a realistic age between 0 and 100.",
-                        "Validation Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Age must be a valid integer number.",
-                    "Validation Error", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+       int age;
+
+try {
+age = Integer.parseInt(ageStr);
+
+
+    if (age < 0 || age > 100) {
+    throw new exception.InvalidAgeException(
+            "Please enter a realistic age between 0 and 100.");
+}
+
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this,
+        "Age must be a valid integer number.",
+        "Validation Error",
+        JOptionPane.WARNING_MESSAGE);
+        return;
+
+    } catch (exception.InvalidAgeException e) {
+        JOptionPane.showMessageDialog(this,
+        e.getMessage(),
+        "Validation Error",
+        JOptionPane.WARNING_MESSAGE);
+        return;
+}
+
 
         CustomerItem selectedCustomer = (CustomerItem) cmbCustomer.getSelectedItem();
         if (selectedCustomer == null) {
@@ -404,6 +450,8 @@ public class PetForm extends javax.swing.JFrame {
         btnRefresh = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPets = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PawCare - Pet Management");
@@ -482,7 +530,9 @@ public class PetForm extends javax.swing.JFrame {
                             .addComponent(lblBreed))
                         .addGap(20, 20, 20)
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPetName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addGroup(pnlCardLayout.createSequentialGroup()
+                                .addGap(106, 106, 106)
+                                .addComponent(txtPetName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                             .addComponent(txtBreed))
                         .addGap(35, 35, 35)
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -492,9 +542,9 @@ public class PetForm extends javax.swing.JFrame {
                         .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbCustomer, 0, 260, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(263, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCardLayout.createSequentialGroup()
-                .addContainerGap(200, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -502,7 +552,7 @@ public class PetForm extends javax.swing.JFrame {
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlCardLayout.setVerticalGroup(
             pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -517,7 +567,7 @@ public class PetForm extends javax.swing.JFrame {
                     .addComponent(txtPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblAge)
                     .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
+                .addGap(37, 37, 37)
                 .addGroup(pnlCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSpecies)
                     .addComponent(cmbSpecies, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -572,6 +622,32 @@ public class PetForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblPets);
 
+        jPanel1.setBackground(new java.awt.Color(24, 35, 59));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 75));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons8-pets-50 (1).png"))); // NOI18N
+        jLabel1.setText("Pet Management");
+        jLabel1.setIconTextGap(15);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(928, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel1)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
         pnlMainLayout.setHorizontalGroup(
@@ -589,13 +665,17 @@ public class PetForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1240, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addGap(20, 20, 20))
+            .addGroup(pnlMainLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
         pnlMainLayout.setVerticalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -604,7 +684,7 @@ public class PetForm extends javax.swing.JFrame {
                     .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
 
@@ -626,6 +706,8 @@ public class PetForm extends javax.swing.JFrame {
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox cmbCustomer;
     private javax.swing.JComboBox cmbSpecies;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblBreed;

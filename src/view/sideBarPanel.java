@@ -39,11 +39,11 @@ public class sideBarPanel extends JPanel {
     private JButton btnReport;
     private JButton btnLogout;
 
-    // Sidebar color palette matching DashboardView2
-    private final Color COLOR_SIDEBAR = new Color(24, 35, 59);     // Dark navy #18233B
-    private final Color COLOR_BTN_NORMAL = new Color(24, 35, 56);   // Inactive button navy
-    private final Color COLOR_BTN_ACTIVE = new Color(21, 101, 192); // Highlighted active blue #1565C0
-    private final Color COLOR_BTN_LOGOUT = new Color(220, 76, 76);  // Red logout button #DC4C4C
+    
+    private final Color COLOR_SIDEBAR = new Color(24, 35, 59);     
+    private final Color COLOR_BTN_NORMAL = new Color(24, 35, 56);   
+    private final Color COLOR_BTN_ACTIVE = new Color(21, 101, 192); 
+    private final Color COLOR_BTN_LOGOUT = new Color(220, 76, 76);  
 
     public sideBarPanel() {
         this("", null);
@@ -96,7 +96,7 @@ public class sideBarPanel extends JPanel {
         setPreferredSize(new Dimension(240, 720));
         setMinimumSize(new Dimension(240, 600));
 
-        // PawCare Logo
+       
         lblSidebarLogo = new JLabel(" PawCare");
         lblSidebarLogo.setFont(new Font("Segoe UI", Font.BOLD, 18));
         lblSidebarLogo.setForeground(Color.WHITE);
@@ -106,7 +106,7 @@ public class sideBarPanel extends JPanel {
             lblSidebarLogo.setIcon(logoIcon);
         }
 
-        // Navigation Buttons
+        
         btnDashboard = createNavButton("Dashboard", "/view/icons8-dashboard-16.png");
         btnDashboard.addActionListener(evt -> navigate("Dashboard"));
 
@@ -128,7 +128,7 @@ public class sideBarPanel extends JPanel {
         btnReport = createNavButton("Reports", "/view/icons8-chart-16.png");
         btnReport.addActionListener(evt -> navigate("Reports"));
 
-        // Logout Button
+       
         btnLogout = new JButton("Logout");
         btnLogout.setBackground(COLOR_BTN_LOGOUT);
         btnLogout.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -185,7 +185,7 @@ public class sideBarPanel extends JPanel {
 
     public void setActivePage(String activePage) {
         this.activePage = activePage != null ? activePage : "";
-        // Reset all button styles to normal
+        
         btnDashboard.setBackground(COLOR_BTN_NORMAL);
         btnDashboard.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         btnDashboard.setBorder(BorderFactory.createEmptyBorder(0, 16, 0, 0));
@@ -250,10 +250,10 @@ public class sideBarPanel extends JPanel {
 
     private void navigate(String target) {
         if (target.equalsIgnoreCase(activePage)) {
-            return; // Already on this page, avoid duplicate window
+            return; 
         }
 
-        // If a single-window navigation handler is registered, delegate to it (CardLayout)
+        
         if (navigationHandler != null) {
             setActivePage(target);
             navigationHandler.accept(target);
@@ -263,60 +263,61 @@ public class sideBarPanel extends JPanel {
         Window currentWindow = parentFrame != null ? parentFrame : SwingUtilities.getWindowAncestor(this);
 
         switch (target) {
-            case "Dashboard":
-                DashboardView2 dashboard = new DashboardView2();
-                dashboard.setLocationRelativeTo(null);
-                dashboard.setVisible(true);
-                if (currentWindow != null) currentWindow.dispose();
-                break;
+        
+            case "Dashboard" -> {
+        DashboardView2 dashboard = new DashboardView2();
+        dashboard.setLocationRelativeTo(null);
+        dashboard.setVisible(true);
+        if (currentWindow != null) currentWindow.dispose();
+    }
 
-            case "Customers":
-                CustomerForm customerForm = new CustomerForm();
-                customerForm.setLocationRelativeTo(null);
-                customerForm.setVisible(true);
-                if (currentWindow != null) currentWindow.dispose();
-                break;
+            case "Customers" -> {
+        CustomerForm customerForm = new CustomerForm();
+        customerForm.setLocationRelativeTo(null);
+        customerForm.setVisible(true);
+        if (currentWindow != null) currentWindow.dispose();
+    }
 
-            case "Appointments":
-                AppointmentForm appointmentForm = new AppointmentForm();
-                appointmentForm.setLocationRelativeTo(null);
-                appointmentForm.setVisible(true);
-                if (currentWindow != null) currentWindow.dispose();
-                break;
+             case "Appointments" -> {
+        AppointmentForm appointmentForm = new AppointmentForm();
+        appointmentForm.setLocationRelativeTo(null);
+        appointmentForm.setVisible(true);
+        if (currentWindow != null) currentWindow.dispose();
+    }
 
-            case "Payments":
-                PaymentForm paymentForm = new PaymentForm();
-                paymentForm.setLocationRelativeTo(null);
-                paymentForm.setVisible(true);
-                if (currentWindow != null) currentWindow.dispose();
-                break;
+             case "Payments" -> {
+        PaymentForm paymentForm = new PaymentForm();
+        paymentForm.setLocationRelativeTo(null);
+        paymentForm.setVisible(true);
+        if (currentWindow != null) currentWindow.dispose();
+    }
 
-            case "Pets":
-                PetForm petForm = new PetForm();
-                petForm.setLocationRelativeTo(null);
-                petForm.setVisible(true);
-                if (currentWindow != null) currentWindow.dispose();
-                break;
+             case "Pets" -> {
+        PetForm petForm = new PetForm();
+        petForm.setLocationRelativeTo(null);
+        petForm.setVisible(true);
+        if (currentWindow != null) currentWindow.dispose();
+    }
 
-            case "Veterinarians":
-                JOptionPane.showMessageDialog(
-                this,
-                "Veterinarian Management is coming soon!",
-                "Coming Soon",
-                JOptionPane.INFORMATION_MESSAGE
-            );
-            break;
+             case "Veterinarians" -> {
+        VeterinarianForm vetForm = new VeterinarianForm();
+        vetForm.setLocationRelativeTo(null);
+        vetForm.setVisible(true);
+        if (currentWindow != null) currentWindow.dispose();
+    }
 
-            case "Reports":
-                JOptionPane.showMessageDialog(
-                this,
-                "Reports will be available soon!",
-                "Coming Soon",
-                JOptionPane.INFORMATION_MESSAGE
-            );
-             break;
-             
-        }
+             case "Reports" -> {
+        ReportsForm reportsForm = new ReportsForm();
+        reportsForm.setLocationRelativeTo(null);
+        reportsForm.setVisible(true);
+        if (currentWindow != null) currentWindow.dispose();
+    }
+
+    default -> {
+        JOptionPane.showMessageDialog(this, "Page not found!");
+    }
+}
+   
     }
 
     private void performLogout() {

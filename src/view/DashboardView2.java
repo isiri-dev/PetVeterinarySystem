@@ -19,6 +19,10 @@ public class DashboardView2 extends javax.swing.JFrame {
     
    public DashboardView2() {
     initComponents();
+    model.AppConfig config = model.AppConfig.getInstance();
+
+    System.out.println(config.getApplicationName()
+        + " Version " + config.getVersion());
     setupSidebarNavigation();
     setLocationRelativeTo(null);
     loadDashboardData();
@@ -34,17 +38,16 @@ public class DashboardView2 extends javax.swing.JFrame {
         ));
 
         btnVet.addActionListener(evt -> {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Veterinarian Management module is opening or currently in progress.",
-                "PawCare - Veterinarians",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            new VeterinarianForm().setVisible(true);
+            this.dispose();
         });
 
-        btnReport.addActionListener(evt -> {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Reports module is opening or currently in progress.",
-                "PawCare - Reports",
-                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+       btnReport.addActionListener((var evt) -> {
+        ReportsForm reportsForm = new ReportsForm();
+        reportsForm.setLocationRelativeTo(null);
+        reportsForm.setVisible(true);
+        this.dispose();
+        
         });
 
         btnLogout.addActionListener(evt -> {
@@ -113,7 +116,6 @@ private void loadUpcomingAppointments() {
         pnlHeader = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         pnlContent = new javax.swing.JPanel();
         pnlSidebar = new javax.swing.JPanel();
         lblSidebarLogo = new javax.swing.JLabel();
@@ -158,21 +160,16 @@ private void loadUpcomingAppointments() {
         lblTitle.setForeground(new java.awt.Color(24, 35, 56));
         lblTitle.setText("Pet Veterinary Management System");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(100, 116, 139));
-        jLabel1.setText("Welcome, Admin!");
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/stethoscope (2).png"))); // NOI18N
-        jLabel2.setText("jLabel2");
+        jLabel1.setText("Welcome !");
 
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderLayout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
+                .addContainerGap(514, Short.MAX_VALUE)
                 .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -184,9 +181,8 @@ private void loadUpcomingAppointments() {
                 .addGap(18, 18, 18)
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTitle)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addComponent(jLabel1))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pnlMain.add(pnlHeader, java.awt.BorderLayout.PAGE_START);
@@ -392,7 +388,7 @@ private void loadUpcomingAppointments() {
                         .addComponent(lblPetsTitle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblPetsCount)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pnlVetCard.setBackground(new java.awt.Color(237, 233, 254));
@@ -421,7 +417,7 @@ private void loadUpcomingAppointments() {
                     .addGroup(pnlVetCardLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(lblVetCount, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -461,7 +457,7 @@ private void loadUpcomingAppointments() {
                     .addGroup(pnlAppointmentLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblAppointments, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlAppointmentLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
@@ -522,7 +518,7 @@ private void loadUpcomingAppointments() {
                     .addGroup(pnlUpcomingAppointmentsLayout.createSequentialGroup()
                         .addGap(69, 69, 69)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlUpcomingAppointmentsLayout.setVerticalGroup(
             pnlUpcomingAppointmentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -543,14 +539,16 @@ private void loadUpcomingAppointments() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlContentLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
                         .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlCustomersCard, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-                            .addComponent(pnlVetCard, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlCustomersCard, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                            .addComponent(pnlVetCard, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                         .addGroup(pnlContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlAppointment, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
-                            .addComponent(pnlPetscard, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)))
-                    .addComponent(pnlUpcomingAppointments, javax.swing.GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE))
+                            .addComponent(pnlPetscard, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                            .addComponent(pnlAppointment, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
+                        .addGap(38, 38, 38))
+                    .addComponent(pnlUpcomingAppointments, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE))
                 .addGap(59, 59, 59))
         );
         pnlContentLayout.setVerticalGroup(
@@ -578,10 +576,12 @@ private void loadUpcomingAppointments() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPetActionPerformed
-        javax.swing.JOptionPane.showMessageDialog(this,
-            "Pet Management module is opening or currently in progress.",
-            "PawCare - Pets",
-            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        
+        PetForm petForm = new PetForm();
+        petForm.setLocationRelativeTo(null);
+        petForm.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_btnPetActionPerformed
 
     private void btnAppointmentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppointmentsActionPerformed
@@ -641,7 +641,6 @@ private void loadUpcomingAppointments() {
     private javax.swing.JButton btnVet;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
